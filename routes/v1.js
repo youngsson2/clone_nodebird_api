@@ -10,11 +10,12 @@ const router = express.Router();
 
 router.post("/token", async (req, res) => {
   try {
+    const { clientSecret } = req.body;
     const domain = await Domain.findOne({
-      where: { clientSecret: req.body.clientSecret },
+      where: { clientSecret },
       include: {
         model: User,
-        attributes: [id, nick],
+        attributes: ["id", nick],
       },
     });
     if (!domain) {
@@ -24,19 +25,20 @@ router.post("/token", async (req, res) => {
       });
     }
     const token = jwt.sign(
+      // jwt.sign(payload, secretOrPublicKey, options)
       {
         id: domain.User.id,
         nick: domain.User.nick,
       },
       process.env.JWT_SECRET,
       {
-        expiresIn: "1m",
+        expiresIn: "1m", //  1분
         issuer: "nodebird",
       }
     );
     return res.json({
       code: 200,
-      message: "토큰이 발급되었습니다.",
+      message: "토큰이 발급 되었습니다",
       token,
     });
   } catch (err) {
@@ -47,3 +49,9 @@ router.post("/token", async (req, res) => {
     });
   }
 });
+
+router.get("/test", verifyToken, (req, res) => {
+  res.json(req.decoded);
+});
+
+module.exports = router;
