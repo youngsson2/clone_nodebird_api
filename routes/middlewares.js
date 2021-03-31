@@ -41,7 +41,11 @@ exports.isNotLoggedIn = (req, res, next) => {
 
 exports.verifyToken = (req, res, next) => {
   try {
+<<<<<<< HEAD
     req.decoded = jwt.verify(req.headers.authorization, process.env.JWT_SECRET); // jwt.verify(token, secretOrPublicKey): 토큰 검증 메서드
+=======
+    req.decode = jwt.verify(req.headers.authorization, process.env.JWT_SECRET); // jwt.verify(token, secretOrPublicKey): 토큰 검증 메서드
+>>>>>>> 8d4c03505f6c79fa1a002dfc496a083f87df0533
     return next();
   } catch (err) {
     if (err.name === "TokenExpiredError") {

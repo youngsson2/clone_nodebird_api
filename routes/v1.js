@@ -13,6 +13,7 @@ router.use(deprecated); // 이 라우터를 통해 들어오는 api 요청은 �
 router.post("/token", async (req, res) => {
   const { clientSecret } = req.body;
   try {
+    const { clientSecret } = req.body;
     const domain = await Domain.findOne({
       where: { clientSecret },
       include: {
