@@ -3,7 +3,7 @@
 const jwt = require("jsonwebtoken");
 const RateLimit = require("express-rate-limit");
 
-exports.apiLimiter = RateLimit({
+exports.apiLimiter = new RateLimit({
   windowMs: 60 * 1000, // 기준 시간
   max: 1, // 허용 횟수
   delayMs: 0, // 호출 간격
